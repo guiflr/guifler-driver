@@ -4,7 +4,7 @@
   "description": "Create folder and files",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "lint": "eslint --fix . && prettier --write ."
   },
   "repository": {
