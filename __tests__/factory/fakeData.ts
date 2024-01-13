@@ -3,7 +3,9 @@ import {
   UserValidator,
   UserValidatorResponse,
 } from '../../src/modules/user/presentation/UserValidator';
+import { UserModel } from '../modules/user/domain/models/UserModel';
 import { Encrypter } from '../modules/user/presentation/Encrypter';
+import { UserDTO, UserRepository } from '../modules/user/repositories/UserRepository';
 
 export const addUserData: UserCreateModel = {
   email: 'email@email.com',
@@ -22,5 +24,17 @@ export class UserValidatorTest implements UserValidator {
 export class EncrypterTest implements Encrypter {
   async encrypt(value: string): Promise<string> {
     return 'hashed-value';
+  }
+}
+
+export class UserRepositoryTest implements UserRepository {
+  async store(user: UserModel): Promise<UserDTO> {
+    return {
+      email: 'email@email.com',
+      id: 1,
+      password: 'password',
+      role: 'admin',
+      username: 'user',
+    };
   }
 }

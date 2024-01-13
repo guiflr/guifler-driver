@@ -1,10 +1,18 @@
 import { AddUser } from '../src/modules/user/Service/AddUser';
-import { EncrypterTest, UserValidatorTest, addUserData } from './factory/fakeData';
+import {
+  EncrypterTest,
+  UserRepositoryTest,
+  UserValidatorTest,
+  addUserData,
+} from './factory/fakeData';
+import { UserModel } from './modules/user/domain/models/UserModel';
 
 describe('AddUser', () => {
   const userValidator = new UserValidatorTest();
   const encrypter = new EncrypterTest();
-  const addUser = new AddUser(userValidator, encrypter);
+  const userRepo = new UserRepositoryTest();
+
+  const addUser = new AddUser(userValidator, encrypter, userRepo);
 
   test('Should call user validator', async () => {
     const spyValidator = jest.spyOn(userValidator, 'validator');
@@ -32,5 +40,20 @@ describe('AddUser', () => {
     await addUser.add(addUserData);
 
     expect(spyEncrypter).toHaveBeenCalledWith(addUserData.password);
+  });
+
+  test('Should call user repository with correct values', async () => {
+    const spyEncrypter = jest.spyOn(userRepo, 'store');
+
+    await addUser.add(addUserData);
+
+    const { passwordConfirm, ...rest } = addUserData;
+
+    const userData: UserModel = {
+      ...rest,
+      password: 'hashed-value',
+    };
+
+    expect(spyEncrypter).toHaveBeenCalledWith(userData);
   });
 });

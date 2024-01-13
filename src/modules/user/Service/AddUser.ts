@@ -3,14 +3,16 @@ import { UserModel } from '../domain/models/UserModel';
 import { UserCreateModel } from '../domain/useCases/UserCreate';
 import { Encrypter } from '../presentation/Encrypter';
 import { UserValidator } from '../presentation/UserValidator';
+import { UserDTO, UserRepository } from '../repositories/UserRepository';
 
 export class AddUser {
   constructor(
     private userValidator: UserValidator,
-    private encrypter: Encrypter
+    private encrypter: Encrypter,
+    private userRepository: UserRepository
   ) {}
 
-  async add(requestBody: UserCreateModel): Promise<UserModel> {
+  async add(requestBody: UserCreateModel): Promise<UserDTO> {
     const { error, isValid } = this.userValidator.validator(requestBody);
 
     if (!isValid) {
@@ -18,8 +20,19 @@ export class AddUser {
       throw missing;
     }
 
-    const hashedPassword = this.encrypter.encrypt(requestBody.password);
+    const { email, password, role, username } = requestBody;
 
-    return { email: '', password: '', role: 'admin', username: '' };
+    const hashedPassword = await this.encrypter.encrypt(password);
+
+    const userData: UserModel = {
+      email,
+      password: hashedPassword,
+      role,
+      username,
+    };
+
+    const user = await this.userRepository.store(userData);
+
+    return user;
   }
 }
