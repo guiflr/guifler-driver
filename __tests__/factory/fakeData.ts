@@ -15,6 +15,14 @@ export const addUserData: UserCreateModel = {
   username: 'user',
 };
 
+export const user: UserDTO = {
+  email: 'email@email.com',
+  id: 1,
+  password: 'password',
+  role: 'admin',
+  username: 'user',
+};
+
 export class UserValidatorTest implements UserValidator {
   validator(user: UserCreateModel): UserValidatorResponse {
     return { error: '', isValid: true };
@@ -28,13 +36,7 @@ export class EncrypterTest implements Encrypter {
 }
 
 export class UserRepositoryTest implements UserRepository {
-  async store(user: UserModel): Promise<UserDTO> {
-    return {
-      email: 'email@email.com',
-      id: 1,
-      password: 'password',
-      role: 'admin',
-      username: 'user',
-    };
+  async store(data: UserModel): Promise<UserDTO> {
+    return user;
   }
 }

@@ -4,6 +4,7 @@ import {
   UserRepositoryTest,
   UserValidatorTest,
   addUserData,
+  user,
 } from './factory/fakeData';
 import { UserModel } from './modules/user/domain/models/UserModel';
 
@@ -55,5 +56,11 @@ describe('AddUser', () => {
     };
 
     expect(spyEncrypter).toHaveBeenCalledWith(userData);
+  });
+
+  test('Should return user data', async () => {
+    const userResponse = await addUser.add(addUserData);
+
+    expect(userResponse).toEqual(user);
   });
 });
