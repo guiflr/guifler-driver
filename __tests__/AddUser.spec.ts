@@ -1,9 +1,10 @@
 import { AddUser } from '../src/modules/user/Service/AddUser';
-import { UserValidatorTest, addUserData } from './factory/fakeData';
+import { EncrypterTest, UserValidatorTest, addUserData } from './factory/fakeData';
 
 describe('AddUser', () => {
   const userValidator = new UserValidatorTest();
-  const addUser = new AddUser(userValidator);
+  const encrypter = new EncrypterTest();
+  const addUser = new AddUser(userValidator, encrypter);
 
   test('Should call user validator', async () => {
     const spyValidator = jest.spyOn(userValidator, 'validator');
@@ -20,8 +21,16 @@ describe('AddUser', () => {
       error: 'fields',
     };
 
-    jest.spyOn(userValidator, 'validator').mockReturnValue({ error: 'fields', isValid: false });
+    jest.spyOn(userValidator, 'validator').mockReturnValueOnce({ error: 'fields', isValid: false });
 
     await expect(() => addUser.add(addUserData)).rejects.toEqual(errorData);
+  });
+
+  test('Should call encrypter with password', async () => {
+    const spyEncrypter = jest.spyOn(encrypter, 'encrypt');
+
+    await addUser.add(addUserData);
+
+    expect(spyEncrypter).toHaveBeenCalledWith(addUserData.password);
   });
 });
