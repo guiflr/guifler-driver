@@ -3,15 +3,13 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+import type { Config } from 'jest';
 
 const config: Config = {
   clearMocks: true,
-  coverageProvider: "v8",
-  testMatch: [
-    "**/__tests__/**/*.[jt]s?(x)"
-  ],
-  preset: "ts-jest",
+  coverageProvider: 'v8',
+  testMatch: ['**/__tests__/**/*.spec.[jt]s?(x)'],
+  preset: 'ts-jest',
 };
 
 export default config;
