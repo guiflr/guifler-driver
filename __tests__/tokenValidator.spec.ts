@@ -5,7 +5,7 @@ describe('tokenValidator', () => {
   test('Should throw an error if token is not received', () => {
     const token = '';
 
-    expect(() => tokenValidator(token, '')).toThrow('token was not sent');
+    expect(() => tokenValidator(token, '')).toThrow('bearer was not sent');
   });
 
   test('Should throw an error if token is not valid', () => {
