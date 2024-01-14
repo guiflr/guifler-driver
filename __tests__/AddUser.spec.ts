@@ -1,4 +1,4 @@
-import { AddUser } from '../src/modules/user/Service/AddUser';
+import { AddUser } from './modules/user/service/AddUser';
 import {
   EncrypterTest,
   UserRepositoryTest,
