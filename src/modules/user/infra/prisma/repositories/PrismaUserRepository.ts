@@ -1,6 +1,6 @@
 import { UserModel } from '../../../domain/models/UserModel';
 import { UserDTO, UserRepository } from '../../../repositories/UserRepository';
-import prisma from '../client';
+import prisma from '../../../../../shared/infra/prisma/client';
 
 export class PrismaUserRepository implements UserRepository {
   async store(user: UserModel): Promise<UserDTO> {
