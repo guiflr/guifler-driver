@@ -5,8 +5,9 @@ import { prismaMock } from './singleton';
 import { addUserData, user } from './factory/fakeData';
 
 describe('userRoues', () => {
+  const userData = { user: { id: 1, role: 'admin' } };
   test('Should return 400 when payload is invalid', async () => {
-    const token = createToken();
+    const token = createToken(userData);
 
     const response = await request(app)
       .post('/users')
@@ -22,7 +23,7 @@ describe('userRoues', () => {
   });
 
   test('Should create user', async () => {
-    const token = createToken();
+    const token = createToken(userData);
 
     prismaMock.user.create.mockResolvedValueOnce(user);
 
