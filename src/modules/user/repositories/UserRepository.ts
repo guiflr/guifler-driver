@@ -6,4 +6,5 @@ export interface UserDTO extends UserModel {
 
 export interface UserRepository {
   store(user: UserModel): Promise<UserDTO>;
+  update(user: UserModel, userId: number): Promise<void>;
 }

@@ -36,6 +36,7 @@ export class EncrypterTest implements Encrypter {
 }
 
 export class UserRepositoryTest implements UserRepository {
+  async update(user: UserModel): Promise<void> {}
   async store(data: UserModel): Promise<UserDTO> {
     return user;
   }
