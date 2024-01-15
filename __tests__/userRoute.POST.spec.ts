@@ -4,7 +4,7 @@ import { createToken } from './factory/createToken';
 import { prismaMock } from './singleton';
 import { addUserData, user } from './factory/fakeData';
 
-describe('userRoues', () => {
+describe('userRoute POST', () => {
   const userData = { user: { id: 1, role: 'admin' } };
   test('Should return 400 when payload is invalid', async () => {
     const token = createToken(userData);
