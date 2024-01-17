@@ -36,6 +36,9 @@ export class EncrypterTest implements Encrypter {
 }
 
 export class UserRepositoryTest implements UserRepository {
+  findAll(): Promise<UserDTO[]> {
+    throw new Error('Method not implemented.');
+  }
   async update(user: UserModel): Promise<void> {}
   async store(data: UserModel): Promise<UserDTO> {
     return user;
