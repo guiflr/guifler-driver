@@ -6,6 +6,12 @@ export class EncrypterAdapter implements Encrypter {
     this.salt = salt;
   }
 
+  async isValid(value: string, hashedValue: string): Promise<boolean> {
+    const isValidValue = await bcrypt.compare(value, hashedValue);
+
+    return isValidValue;
+  }
+
   async encrypt(value: string): Promise<string> {
     const hash = await bcrypt.hash(value, this.salt);
 

@@ -30,12 +30,18 @@ export class UserValidatorTest implements UserValidator {
 }
 
 export class EncrypterTest implements Encrypter {
+  isValid(value: string, hashedValue: string): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
   async encrypt(value: string): Promise<string> {
     return 'hashed-value';
   }
 }
 
 export class UserRepositoryTest implements UserRepository {
+  findByEmail(email: string): Promise<UserDTO> {
+    throw new Error('Method not implemented.');
+  }
   findAll(): Promise<UserDTO[]> {
     throw new Error('Method not implemented.');
   }
