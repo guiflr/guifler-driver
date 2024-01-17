@@ -3,8 +3,12 @@ import { UserDTO, UserRepository } from '../../../repositories/UserRepository';
 import prisma from '../../../../../shared/infra/prisma/client';
 
 export class PrismaUserRepository implements UserRepository {
-  findByEmail(email: string): Promise<UserDTO> {
-    throw new Error('Method not implemented.');
+  async findByEmail(email: string): Promise<UserDTO | null> {
+    const user = await prisma.user.findFirst({
+      where: { email },
+    });
+
+    return user;
   }
   async findAll(): Promise<UserDTO[]> {
     const users = await prisma.user.findMany({
