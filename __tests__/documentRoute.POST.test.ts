@@ -9,10 +9,12 @@ describe('userRoute POST', () => {
   const invalidUser = { user: { id: 1, role: 'guest' } };
 
   beforeEach(async () => {
+    await prisma.document.deleteMany();
     await prisma.user.deleteMany();
   });
 
   afterAll(async () => {
+    await prisma.document.deleteMany();
     await prisma.user.deleteMany();
   });
 
@@ -44,7 +46,7 @@ describe('userRoute POST', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Should return created data', async () => {
+  test('Should return 400 if user is not sent', async () => {
     const token = createToken(user);
 
     const reqData = { name: 'my-document', type: 'folder', owner_id: null };
@@ -54,10 +56,63 @@ describe('userRoute POST', () => {
       .set('Authorization', `bearer ${token}`)
       .send(reqData);
 
+    expect(response.status).toBe(400);
+  });
+
+  test('Should return 400 if user is not sent', async () => {
+    const token = createToken(user);
+
+    const reqData = { name: 'my-document', type: 'folder', owner_id: null };
+
+    const response = await request(app)
+      .post(`/documents`)
+      .set('Authorization', `bearer ${token}`)
+      .send();
+
+    expect(response.status).toBe(400);
+  });
+
+  test('Should return 400 if user not exists', async () => {
+    const token = createToken(user);
+
+    const reqData = { name: 'my-document', type: 'folder', owner_id: null };
+
+    const userResponse = await request(app)
+      .post('/users')
+      .set('Authorization', `bearer ${token}`)
+      .send(addUserData);
+
+    const userData = JSON.parse(userResponse.text);
+
+    const response = await request(app)
+      .post(`/documents`)
+      .set('Authorization', `bearer ${token}`)
+      .send({ ...reqData, user_id: userData.id + 10 });
+
+    expect(response.status).toBe(400);
+  });
+
+  test('Should return data', async () => {
+    const token = createToken(user);
+
+    const reqData = { name: 'my-document', type: 'folder', owner_id: null };
+
+    const userResponse = await request(app)
+      .post('/users')
+      .set('Authorization', `bearer ${token}`)
+      .send(addUserData);
+
+    const userData = JSON.parse(userResponse.text);
+
+    const response = await request(app)
+      .post(`/documents`)
+      .set('Authorization', `bearer ${token}`)
+      .send({ ...reqData, user_id: userData.id });
+
     expect(response.status).toBe(200);
 
     const parsed = JSON.parse(response.text);
     const { id, ...responseData } = parsed;
-    expect(responseData).toEqual(reqData);
+    expect(responseData).toEqual({ ...reqData, user_id: userData.id });
   });
 });

@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       Int        @id @default(autoincrement())
   role     Role
   email    String
   password String
   username String
+  Document Document[]
 }
 
 enum Role {
@@ -29,6 +30,8 @@ model Document {
   name     String
   type     DocumentType
   owner_id Int?
+  user_id  Int
+  user     User         @relation(fields: [user_id], references: [id])
 }
 
 enum DocumentType {
