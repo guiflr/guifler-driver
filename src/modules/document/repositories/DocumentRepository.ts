@@ -6,4 +6,5 @@ export interface DocumentDTO extends DocumentModel {
 
 export interface DocumentRepository {
   store(user: DocumentModel): Promise<DocumentDTO>;
+  getByUser(userId: number): Promise<DocumentDTO[]>;
 }
