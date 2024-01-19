@@ -1,5 +1,5 @@
+import { GetUsers } from '../Service/GetUsers';
 import { PrismaUserRepository } from '../infra/prisma/repositories/PrismaUserRepository';
-import { GetUsers } from '../service/GetUsers';
 
 export async function makeGetAllUsers() {
   const userRepo = new PrismaUserRepository();
