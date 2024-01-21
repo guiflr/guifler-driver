@@ -5,6 +5,10 @@ export type SignInData = {
   password: string;
 };
 
+export interface SignInResponse extends UserDTO{
+  token: string
+}
+
 export interface SignInUser {
-  signIn(data: SignInData): Promise<UserDTO>;
+  signIn(data: SignInData): Promise<SignInResponse>;
 }

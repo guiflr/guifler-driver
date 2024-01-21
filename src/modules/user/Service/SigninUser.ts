@@ -1,15 +1,17 @@
 import { missingParamError } from '../../../shared/errors/missingParamsError';
 import { singInError } from '../../../shared/errors/signInError';
-import { SignInData, SignInUser } from '../domain/useCases/SigninUser';
+import { SignInData, SignInResponse, SignInUser } from '../domain/useCases/SigninUser';
 import { Encrypter } from '../presentation/Encrypter';
-import { UserDTO, UserRepository } from '../repositories/UserRepository';
+import { Token } from '../presentation/Token';
+import { UserRepository } from '../repositories/UserRepository';
 
 export class SignInUserService implements SignInUser {
-  constructor(
+  constructor (
     private userRepository: UserRepository,
-    private encrypter: Encrypter
+    private encrypter: Encrypter,
+    private token: Token
   ) {}
-  async signIn({ email, password }: SignInData): Promise<UserDTO> {
+  async signIn ({ email, password }: SignInData): Promise<SignInResponse> {
     if (!email) {
       throw missingParamError('email was not sent');
     }
@@ -30,6 +32,10 @@ export class SignInUserService implements SignInUser {
       throw singInError();
     }
 
-    return user;
+    const { role, id } = user;
+
+    const token = this.token.generate({ role, id });
+
+    return { ...user, token };
   }
 }
