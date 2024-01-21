@@ -28,7 +28,7 @@ describe('PrismaUserRepository', () => {
     const { passwordConfirm, ...userData } = addUserData;
 
     await prisma.user.create({ data: userData });
-    await prisma.user.create({ data: { ...userData, role: 'creator' } });
+    await prisma.user.create({ data: { ...userData, role: 'creator', email: 'ealeatorio@rmail.com' } });
 
     const users = await userRepo.findAll();
 

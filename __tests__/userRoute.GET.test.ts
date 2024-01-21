@@ -19,7 +19,7 @@ describe('userRoute POST', () => {
   test('Should return not admin users', async () => {
     const token = createToken(user);
 
-    await prisma.user.create({ data: userData });
+    await prisma.user.create({ data: {...userData,  email: 'mark@email.com'} });
     await prisma.user.create({ data: { ...userData, role: 'creator' } });
 
     const response = await request(app)
