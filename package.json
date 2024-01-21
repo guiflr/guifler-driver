@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "description": "Create folder and files",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "jest --runInBand",
     "lint": "eslint --fix . && prettier --write .",
-    "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
+    "start": "node ./dist/src/server.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "test:integration": "npm run docker:up && npx prisma migrate dev --name init && npm test -- -c jest-config-integration.ts",
-    "test:unit": "npm test -- -c jest-config-integration.ts"
+    "test:unit": "npm test -- -c jest-config-integration.ts",
+    "prisma:migrate": "npx prisma migrate dev --name init",
+    "prisma:seed": "ts-node prisma/seed.ts"
   },
   "repository": {
     "type": "git",
