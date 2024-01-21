@@ -6,7 +6,7 @@ import {
   user,
 } from './factory/fakeData';
 import { UserModel } from '../src/modules/user/domain/models/UserModel';
-import { UpdateUser } from '../src/modules/user/service/UpdateUser';
+import { UpdateUser } from '../src/modules/user/Service/UpdateUser';
 
 describe('AddUser', () => {
   const userValidator = new UserValidatorTest();
