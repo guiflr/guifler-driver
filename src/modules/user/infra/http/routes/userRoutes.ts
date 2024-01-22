@@ -3,6 +3,7 @@ import { makeAddUser } from '../../../factories/makeAddUser';
 import { adminRole } from '../../../../../shared/http/middlewares/adminRole';
 import { makeUpdateUser } from '../../../factories/makeUpdateUser';
 import { makeGetAllUsers } from '../../../factories/makeGetAllUsers';
+import { makeGetUser } from '../../../factories/makeGetuser';
 
 const userRoutes = Router();
 
@@ -29,6 +30,16 @@ userRoutes.get('/', adminRole, async (req: Request, res: Response, next: NextFun
   try {
     const id = Number(req.params.userId);
     const users = await makeGetAllUsers();
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+});
+
+userRoutes.get('/:id', adminRole, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = Number(req.params.id);
+    const users = await makeGetUser(id);
     res.json(users);
   } catch (err) {
     next(err);

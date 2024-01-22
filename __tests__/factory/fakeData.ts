@@ -24,29 +24,32 @@ export const user: UserDTO = {
 };
 
 export class UserValidatorTest implements UserValidator {
-  validator(user: UserCreateModel): UserValidatorResponse {
+  validator (user: UserCreateModel): UserValidatorResponse {
     return { error: '', isValid: true };
   }
 }
 
 export class EncrypterTest implements Encrypter {
-  isValid(value: string, hashedValue: string): Promise<boolean> {
+  isValid (value: string, hashedValue: string): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
-  async encrypt(value: string): Promise<string> {
+  async encrypt (value: string): Promise<string> {
     return 'hashed-value';
   }
 }
 
 export class UserRepositoryTest implements UserRepository {
-  findByEmail(email: string): Promise<UserDTO> {
+  async findBy (id: number): Promise<UserDTO | null> {
+    return null
+  }
+  findByEmail (email: string): Promise<UserDTO> {
     throw new Error('Method not implemented.');
   }
-  findAll(): Promise<UserDTO[]> {
+  findAll (): Promise<UserDTO[]> {
     throw new Error('Method not implemented.');
   }
-  async update(user: UserModel): Promise<void> {}
-  async store(data: UserModel): Promise<UserDTO> {
+  async update (user: UserModel): Promise<void> {}
+  async store (data: UserModel): Promise<UserDTO> {
     return user;
   }
 }
