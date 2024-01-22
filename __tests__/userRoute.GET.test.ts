@@ -5,7 +5,7 @@ import { addUserData } from './factory/fakeData';
 import prisma from '../src/shared/infra/prisma/client';
 
 describe('userRoute POST', () => {
-  const user = { user: { id: 1, role: 'admin' } };
+  const user = { id: 1, role: 'admin' };
   const { passwordConfirm, ...userData } = addUserData;
 
   beforeEach(async () => {
@@ -19,7 +19,7 @@ describe('userRoute POST', () => {
   test('Should return not admin users', async () => {
     const token = createToken(user);
 
-    await prisma.user.create({ data: {...userData,  email: 'mark@email.com'} });
+    await prisma.user.create({ data: { ...userData, email: 'mark@email.com' } });
     await prisma.user.create({ data: { ...userData, role: 'creator' } });
 
     const response = await request(app)

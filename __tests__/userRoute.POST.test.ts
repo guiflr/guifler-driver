@@ -1,11 +1,15 @@
 import request from 'supertest';
 import { app } from '../src/shared/http/routes';
 import { createToken } from './factory/createToken';
-import { prismaMock } from './singleton';
 import { addUserData, user } from './factory/fakeData';
+import prisma from '../src/shared/infra/prisma/client';
 
 describe('userRoute POST', () => {
-  const userData = { user: { id: 1, role: 'admin' } };
+  beforeEach(async () => {
+    await prisma.user.deleteMany();
+  });
+
+  const userData = { id: 1, role: 'admin' };
   test('Should return 400 when payload is invalid', async () => {
     const token = createToken(userData);
 
@@ -25,15 +29,19 @@ describe('userRoute POST', () => {
   test('Should create user', async () => {
     const token = createToken(userData);
 
-    prismaMock.user.create.mockResolvedValueOnce(user);
+    const { passwordConfirm, ...userField } = addUserData;
 
     const response = await request(app)
       .post('/users')
       .set('Authorization', `bearer ${token}`)
       .send(addUserData);
+
     expect(response.status).toBe(201);
     const body = JSON.parse(response.text);
 
-    expect(body).toEqual(user);
+    const { id, ...user } = body;
+
+    expect(user.email).toEqual(userField.email);
+    expect(user.role).toEqual(userField.role);
   });
 });

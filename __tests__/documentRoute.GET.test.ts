@@ -5,8 +5,7 @@ import { addUserData } from './factory/fakeData';
 import prisma from '../src/shared/infra/prisma/client';
 
 describe('userRoute POST', () => {
-  const user = { user: { id: 1, role: 'admin' } };
-  const invalidUser = { user: { id: 1, role: 'guest' } };
+  const user = { id: 1, role: 'admin' } 
 
   beforeEach(async () => {
     await prisma.document.deleteMany();

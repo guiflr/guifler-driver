@@ -19,7 +19,7 @@ describe('userRoues', () => {
   });
 
   test('Should return 400 when token is valid', async () => {
-    const token = createToken({ user: { id: 1, role: 'admin' } });
+    const token = createToken({ id: 1, role: 'admin' });
 
     const response = await request(app)
       .post('/users')

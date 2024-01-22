@@ -27,7 +27,7 @@ describe('AddUser', () => {
   test('Should throw an error when request data is invalid', async () => {
     const errorData = {
       status: 400,
-      message: 'Invalid or missing param was sent',
+      message: 'Invalid or missing param',
       error: 'fields',
     };
 

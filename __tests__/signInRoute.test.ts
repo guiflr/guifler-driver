@@ -12,7 +12,7 @@ describe('signInRoute', () => {
   afterAll(async () => {
     await prisma.user.deleteMany();
   });
-  const userData = { user: { id: 1, role: 'admin' } };
+  const userData = { id: 1, role: 'admin' };
   test('Should return 400 when not send email', async () => {
     const token = createToken(userData);
 

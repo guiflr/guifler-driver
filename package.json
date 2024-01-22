@@ -11,7 +11,7 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "test:integration": "npm run docker:up && npx prisma migrate dev --name init && npm test -- -c jest-config-integration.ts",
-    "test:unit": "npm test -- -c jest-config-integration.ts",
+    "test:unit": "npm test -- -c jest-config-unit.ts",
     "prisma:migrate": "npx prisma migrate dev --name init",
     "prisma:seed": "ts-node prisma/seed.ts"
   },
