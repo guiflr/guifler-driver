@@ -11,6 +11,7 @@ const config: Config = {
   testMatch: ['**/__tests__/**/*.spec.[jt]s?(x)'],
   preset: 'ts-jest',
   setupFilesAfterEnv: ['<rootDir>/__tests__/singleton.ts'],
+  testPathIgnorePatterns: ['./dist'],
 };
 
 export default config;

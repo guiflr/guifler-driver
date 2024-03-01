@@ -4,3 +4,9 @@ export type UserModel = {
     password: string;
     role: 'admin' | 'creator' | 'guest';
   };
+
+  export type UpdateUserModel = {
+    username: string;
+    email: string; 
+    role: 'admin' | 'creator' | 'guest';
+  }

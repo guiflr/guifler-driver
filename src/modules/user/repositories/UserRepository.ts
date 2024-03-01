@@ -1,4 +1,4 @@
-import { UserModel } from '../domain/models/UserModel';
+import { UpdateUserModel, UserModel } from '../domain/models/UserModel';
 import { SignInData } from '../domain/useCases/SigninUser';
 
 export interface UserDTO extends UserModel {
@@ -7,7 +7,7 @@ export interface UserDTO extends UserModel {
 
 export interface UserRepository {
   store(user: UserModel): Promise<UserDTO>;
-  update(user: UserModel, userId: number): Promise<void>;
+  update(user: UpdateUserModel, userId: number): Promise<void>;
   findAll(): Promise<UserDTO[]>;
   findByEmail(email: string): Promise<UserDTO | null>;
   findBy(id: number): Promise<UserDTO | null>;

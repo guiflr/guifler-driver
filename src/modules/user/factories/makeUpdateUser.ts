@@ -1,15 +1,13 @@
 import { UpdateUser } from '../Service/UpdateUser';
-import { EncrypterAdapter } from '../adapters/EncrypterAdapter';
-import { UserValidatorAdapter } from '../adapters/UserValidatorAdapter';
+import { UpdateUserValidatorAdapter } from '../adapters/UpdateUserValidatorAdapter';
 import { UserCreateModel } from '../domain/useCases/UserCreate';
 import { PrismaUserRepository } from '../infra/prisma/repositories/PrismaUserRepository';
 
 export async function makeUpdateUser(requestBody: UserCreateModel, userId: number) {
-  const userValidatorAdapter = new UserValidatorAdapter();
-  const encryAdapter = new EncrypterAdapter(12);
+  const userValidatorAdapter = new UpdateUserValidatorAdapter(); 
   const userRepo = new PrismaUserRepository();
 
-  const updateUser = new UpdateUser(userValidatorAdapter, encryAdapter, userRepo);
+  const updateUser = new UpdateUser(userValidatorAdapter, userRepo);
 
   const user = await updateUser.update(requestBody, userId);
 

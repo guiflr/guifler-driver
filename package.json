@@ -13,7 +13,8 @@
     "test:integration": "npm run docker:up && npx prisma migrate dev --name init && npm test -- -c jest-config-integration.ts",
     "test:unit": "npm test -- -c jest-config-unit.ts",
     "prisma:migrate": "npx prisma migrate dev --name init",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "build": "npx tsc"
   },
   "repository": {
     "type": "git",

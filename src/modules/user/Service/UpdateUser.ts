@@ -1,5 +1,5 @@
 import { missingParamError } from '../../../shared/errors/missingParamsError';
-import { UserModel } from '../domain/models/UserModel';
+import { UpdateUserModel, UserModel } from '../domain/models/UserModel';
 import { UserCreateModel } from '../domain/useCases/UserCreate';
 import { Encrypter } from '../presentation/Encrypter';
 import { UserValidator } from '../presentation/UserValidator';
@@ -7,8 +7,7 @@ import { UserRepository } from '../repositories/UserRepository';
 
 export class UpdateUser {
   constructor(
-    private userValidator: UserValidator,
-    private encrypter: Encrypter,
+    private userValidator: UserValidator,  
     private userRepository: UserRepository
   ) {}
 
@@ -20,13 +19,10 @@ export class UpdateUser {
       throw missing;
     }
 
-    const { email, password, role, username } = requestBody;
+    const { email, role, username } = requestBody;
 
-    const hashedPassword = await this.encrypter.encrypt(password);
-
-    const userData: UserModel = {
-      email,
-      password: hashedPassword,
+    const userData: UpdateUserModel = {
+      email,     
       role,
       username,
     };
