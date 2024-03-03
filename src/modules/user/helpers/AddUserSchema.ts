@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const AddUserSchema = z
   .object({
-    email: z.string().email({ message: 'email is invalid' }),
+    email: z.string({ required_error: 'email is required' }).email({ message: 'email is invalid' }),
     username: z.string({ required_error: 'username is required' }),
     role: z.enum(['admin', 'creator', 'guest'], {
       required_error: 'role is required',
@@ -12,7 +12,7 @@ export const AddUserSchema = z
       .string({ required_error: 'password is required' })
       .min(6, { message: 'password has less than six character' }),
     passwordConfirm: z
-      .string({ required_error: 'password is required' })
+      .string({ required_error: 'passwordConfirm is required' })
       .min(6, { message: 'password has less than six character' }),
   })
   .superRefine((fields, ctx) => {
