@@ -1,0 +1,22 @@
+name: CD/CD pipeline
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Deploy To EC2 Instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            docker stop webapp || true
+            docker rm webapp || true
+            docker build -f Dockerfile -t ${{ secrets.EC2_HOST }}:${{ secrets.EC2_USERNAME }} .
+            docker run -d --name webapp -p 80:80 {{ secrets.EC2_HOST }}:${{ secrets.EC2_USERNAME }}
