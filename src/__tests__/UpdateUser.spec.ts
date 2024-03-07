@@ -5,8 +5,8 @@ import {
   addUserData,
   user,
 } from './factory/fakeData';
-import { UpdateUserModel, UserModel } from '../src/modules/user/domain/models/UserModel';
-import { UpdateUser } from '../src/modules/user/Service/UpdateUser';
+import { UpdateUserModel, UserModel } from '../modules/user/domain/models/UserModel';
+import { UpdateUser } from '../modules/user/Service/UpdateUser';
 
 describe('AddUser', () => {
   const userValidator = new UserValidatorTest();

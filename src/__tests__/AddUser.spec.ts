@@ -1,4 +1,3 @@
-
 import {
   EncrypterTest,
   UserRepositoryTest,
@@ -6,8 +5,8 @@ import {
   addUserData,
   user,
 } from './factory/fakeData';
-import { UserModel } from '../src/modules/user/domain/models/UserModel';
-import { AddUser } from '../src/modules/user/Service/AddUser'
+import { UserModel } from '../modules/user/domain/models/UserModel';
+import { AddUser } from '../modules/user/Service/AddUser';
 
 describe('AddUser', () => {
   const userValidator = new UserValidatorTest();

@@ -1,8 +1,8 @@
 import 'dotenv/config';
 
 import { user as userFake, addUserData } from './factory/fakeData';
-import { PrismaUserRepository } from '../src/modules/user/infra/prisma/repositories/PrismaUserRepository';
-import prisma from '../src/shared/infra/prisma/client';
+import { PrismaUserRepository } from '../modules/user/infra/prisma/repositories/PrismaUserRepository';
+import prisma from '../shared/infra/prisma/client';
 
 describe('PrismaUserRepository', () => {
   const userRepo = new PrismaUserRepository();
@@ -28,7 +28,9 @@ describe('PrismaUserRepository', () => {
     const { passwordConfirm, ...userData } = addUserData;
 
     await prisma.user.create({ data: userData });
-    await prisma.user.create({ data: { ...userData, role: 'creator', email: 'ealeatorio@rmail.com' } });
+    await prisma.user.create({
+      data: { ...userData, role: 'creator', email: 'ealeatorio@rmail.com' },
+    });
 
     const users = await userRepo.findAll();
 

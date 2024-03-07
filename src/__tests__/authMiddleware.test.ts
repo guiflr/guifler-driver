@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import request from 'supertest';
-import { app } from '../src/shared/http/routes';
+import { app } from '../shared/http/routes';
 import jwt from 'jsonwebtoken';
 import { createToken } from './factory/createToken';
 

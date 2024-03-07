@@ -10,7 +10,6 @@ const config: Config = {
   coverageProvider: 'v8',
   testMatch: ['**/__tests__/**/*.spec.[jt]s?(x)'],
   preset: 'ts-jest',
-  setupFilesAfterEnv: ['<rootDir>/__tests__/singleton.ts'],
   testPathIgnorePatterns: ['./dist'],
 };
 

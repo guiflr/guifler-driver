@@ -1,5 +1,5 @@
-import { DocumentValidatorAdapter } from '../src/modules/document/adapters/DocumentValidatorAdapter';
-import { DocumentModel } from '../src/modules/document/domain/models/DocumentModel';
+import { DocumentValidatorAdapter } from '../modules/document/adapters/DocumentValidatorAdapter';
+import { DocumentModel } from '../modules/document/domain/models/DocumentModel';
 
 describe('DocumentValidatorAdapter', () => {
   const documentValidator = new DocumentValidatorAdapter();

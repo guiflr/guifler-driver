@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { app } from '../src/shared/http/routes';
+import { app } from '../shared/http/routes';
 import { addUserData } from './factory/fakeData';
-import prisma from '../src/shared/infra/prisma/client';
+import prisma from '../shared/infra/prisma/client';
 import { createToken } from './factory/createToken';
 
 describe('userRoute POST', () => {
@@ -26,7 +26,7 @@ describe('userRoute POST', () => {
   test('Should update user', async () => {
     const token = createToken(userData);
 
-    const {  passwordConfirm, ...userField} = addUserData
+    const { passwordConfirm, ...userField } = addUserData;
 
     const user = await prisma.user.create({ data: userField });
 

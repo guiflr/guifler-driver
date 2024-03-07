@@ -1,8 +1,8 @@
 import { createToken } from './factory/createToken';
 import { addUserData } from './factory/fakeData';
 import request from 'supertest';
-import { app } from '../src/shared/http/routes';
-import prisma from '../src/shared/infra/prisma/client';
+import { app } from '../shared/http/routes';
+import prisma from '../shared/infra/prisma/client';
 
 describe('signInRoute', () => {
   beforeEach(async () => {

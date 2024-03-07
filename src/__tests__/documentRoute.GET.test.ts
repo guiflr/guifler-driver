@@ -1,11 +1,11 @@
 import request from 'supertest';
-import { app } from '../src/shared/http/routes';
+import { app } from '../shared/http/routes';
 import { createToken } from './factory/createToken';
 import { addUserData } from './factory/fakeData';
-import prisma from '../src/shared/infra/prisma/client';
+import prisma from '../shared/infra/prisma/client';
 
 describe('userRoute POST', () => {
-  const user = { id: 1, role: 'admin' } 
+  const user = { id: 1, role: 'admin' };
 
   beforeEach(async () => {
     await prisma.document.deleteMany();

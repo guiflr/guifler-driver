@@ -1,11 +1,11 @@
-import { UserCreateModel } from '../../src/modules/user/domain/useCases/UserCreate';
+import { UserCreateModel } from '../../modules/user/domain/useCases/UserCreate';
 import {
   UserValidator,
   UserValidatorResponse,
-} from '../../src/modules/user/presentation/UserValidator';
-import { UserModel } from '../modules/user/domain/models/UserModel';
-import { Encrypter } from '../modules/user/presentation/Encrypter';
-import { UserDTO, UserRepository } from '../modules/user/repositories/UserRepository';
+} from '../../modules/user/presentation/UserValidator';
+import { UserModel } from '../../modules/user/domain/models/UserModel';
+import { Encrypter } from '../../modules/user/presentation/Encrypter';
+import { UserDTO, UserRepository } from '../../modules/user/repositories/UserRepository';
 
 export const addUserData: UserCreateModel = {
   email: 'email@email.com',
@@ -40,7 +40,7 @@ export class EncrypterTest implements Encrypter {
 
 export class UserRepositoryTest implements UserRepository {
   async findBy (id: number): Promise<UserDTO | null> {
-    return null
+    return null;
   }
   findByEmail (email: string): Promise<UserDTO> {
     throw new Error('Method not implemented.');

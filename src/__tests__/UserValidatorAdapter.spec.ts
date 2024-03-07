@@ -1,5 +1,5 @@
-import { UserValidatorAdapter } from '../src/modules/user/adapters/UserValidatorAdapter';
-import { UserCreateModel } from '../src/modules/user/domain/useCases/UserCreate';
+import { UserValidatorAdapter } from '../modules/user/adapters/UserValidatorAdapter';
+import { UserCreateModel } from '../modules/user/domain/useCases/UserCreate';
 import { addUserData } from './factory/fakeData';
 
 describe('UserValidatorAdapter', () => {

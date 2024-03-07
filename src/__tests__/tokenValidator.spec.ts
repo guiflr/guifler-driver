@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { tokenValidator } from '../src/shared/helpers/tokenValidator';
+import { tokenValidator } from '../shared/helpers/tokenValidator';
 
 describe('tokenValidator', () => {
   test('Should throw an error if token is not received', () => {
