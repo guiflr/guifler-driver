@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Manipulação de Arquivos e Usuários",
+    "description": "API para fazer upload de arquivos e adição de novos usuários",
+    "contact": {
+      "email": "guiflr97@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://34.207.142.207/",
+      "description": "API de produção"
+    },
+    {
+      "url": "http://localhost:8080/",
+      "description": "API de produção"
+    }
+  ],
+  "paths": {
+    "/signin": {
+      "post": {
+        "summary": "Autenticação",
+        "description": "Essa rota é responsável para gerar token de autenticação",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Signin"
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "400": {
+          "description": "Retorna 400 quando algum dado está faltando",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Retorna 401 quando não foi autorizado a entrada",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "200": {
+          "description": "Retorna 200 quando dados de login estão corretos",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SigninResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Signin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "SigninResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "role": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

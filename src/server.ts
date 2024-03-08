@@ -1,5 +1,7 @@
 import { app } from './shared/http/routes';
 
-app.listen(80, () => {
+const PORT = process.env.PORT || 9090;
+
+app.listen(PORT, () => {
   console.log('App Listen On Port: ', process.env.PORT);
 });
