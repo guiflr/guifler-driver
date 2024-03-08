@@ -231,6 +231,64 @@
           }
         }
       }
+    },
+    "/documents/user/{id}": {
+      "get": {
+        "tags": [
+          "Document"
+        ],
+        "summary": "Lista documentos por usuário",
+        "description": "Endpoint responsável listar todos documentos de um usuário",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Document"
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Retorna 401 quando não foi autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Retorna 403 quando usuário não tem permissão para requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retorna 200 quando sucesso na listagem",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CreatedDocument"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
