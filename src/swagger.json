@@ -20,6 +20,9 @@
   "paths": {
     "/signin": {
       "post": {
+        "tags": [
+          "Token"
+        ],
         "summary": "Autenticação",
         "description": "Essa rota é responsável para gerar token de autenticação",
         "requestBody": {
@@ -193,7 +196,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUser"
+                "$ref": "#/components/schemas/UserUpdate"
               }
             }
           }
@@ -229,15 +232,8 @@
               }
             }
           },
-          "201": {
-            "description": "Retorna 200 quando dados foram salvos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
+          "204": {
+            "description": "Retorna 204 quando dados foram atualizados"
           }
         }
       },
@@ -245,8 +241,8 @@
         "tags": [
           "User"
         ],
-        "summary": "Lista usuários",
-        "description": "Endpoint responsável por listar usuários",
+        "summary": "Busca um suário",
+        "description": "Endpoint responsável por buscar um usuário em específico",
         "security": [
           {
             "bearerAuth": []
@@ -255,6 +251,16 @@
         "responses": {
           "401": {
             "description": "Retorna 401 quando não foi autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Retorna 404 quando não encontra o usuário",
             "content": {
               "application/json": {
                 "schema": {
@@ -278,10 +284,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -489,6 +493,17 @@
             "type": "string"
           },
           "passwordConfirm": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "username": {
             "type": "string"
           },
           "role": {
