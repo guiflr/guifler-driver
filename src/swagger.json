@@ -21,7 +21,7 @@
     "/signin": {
       "post": {
         "tags": [
-          "Token"
+          "Token and User"
         ],
         "summary": "Autenticação",
         "description": "Essa rota é responsável para gerar token de autenticação",
