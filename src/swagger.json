@@ -30,12 +30,10 @@
               }
             }
           }
-        }
-      },
-      "responses": {
-        "400": {
-          "description": "Retorna 400 quando algum dado está faltando",
-          "requestBody": {
+        },
+        "responses": {
+          "400": {
+            "description": "Retorna 400 quando algum dado está faltando",
             "content": {
               "application/json": {
                 "schema": {
@@ -43,11 +41,9 @@
                 }
               }
             }
-          }
-        },
-        "401": {
-          "description": "Retorna 401 quando não foi autorizado a entrada",
-          "requestBody": {
+          },
+          "401": {
+            "description": "Retorna 401 quando não foi autorizado a entrada",
             "content": {
               "application/json": {
                 "schema": {
@@ -55,11 +51,9 @@
                 }
               }
             }
-          }
-        },
-        "200": {
-          "description": "Retorna 200 quando dados de login estão corretos",
-          "requestBody": {
+          },
+          "200": {
+            "description": "Retorna 200 quando dados de login estão corretos",
             "content": {
               "application/json": {
                 "schema": {
@@ -73,6 +67,9 @@
     },
     "/users": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "Cria um usuário",
         "description": "Endpoint responsável por salvar um usuário na base de dados",
         "security": [
@@ -92,48 +89,84 @@
         "responses": {
           "400": {
             "description": "Retorna 400 quando algum dado está faltando",
-            "requestBody": {
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Error"
-                  }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
           },
           "401": {
             "description": "Retorna 401 quando não foi autenticado",
-            "requestBody": {
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Error"
-                  }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
           },
           "403": {
             "description": "Retorna 403 quando usuário não tem permissão para requisição",
-            "requestBody": {
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Error"
-                  }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
           },
           "201": {
             "description": "Retorna 201 quando dados foram salvos",
-            "requestBody": {
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/SigninResponse"
-                  }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Lista usuários",
+        "description": "Endpoint responsável por listar usuários",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Retorna 401 quando não foi autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Retorna 403 quando usuário não tem permissão para requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retorna 200 no sucesso da busca",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -195,6 +228,29 @@
       "CreateUser": {
         "type": "object",
         "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "passwordConfirm": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
           "username": {
             "type": "string"
           },
