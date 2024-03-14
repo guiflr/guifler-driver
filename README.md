@@ -7,7 +7,7 @@
 
 ## Configuração de ambiente de teste
 
-1. **Vairiaveis de ambiente:** Baseado no .env.example crie o arquivo .env
+1. **Variaveis de ambiente:** Baseado no .env.example crie o arquivo .env
 2. **Testes:** Rode o comando `npm run test`
 
-Os testes de integração podem ser executados isoladamente rodando `npm run test:integration`, porém não dei muita atenção a eles, mas podem ser executados de desejar.
+Os testes de integração podem ser executados isoladamente rodando `npm run test:integration`, porém não dei muita atenção a eles, mas podem ser executados se desejar.
