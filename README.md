@@ -1,8 +1,8 @@
-# API para gerenciamento de documentos
+# API Para Gerenciamento de Documentos
 
 ## Configuração de ambiente local
 
-1. **Vairiaveis de ambiente:** Baseado no .env.example crie o arquivo .env, o valor já atribuido no DATABASE_URL ja ira funcionar no ambiente de teste dentro do docker.
+1. **Variaveis de ambiente:** Baseado no .env.example crie o arquivo .env, o valor já atribuido no DATABASE_URL ja ira funcionar no ambiente de teste dentro do docker.
 2. **Subir ambiente de teste local:** Rode o comando `npm  run docker:up`, a url para testes estara disponivel em **http://localhost:<VALOR COLOCADO NA CONSTANTE PORT NO .ENV>**, documentação de encontra no endpoint **/api/docs**
 
 ## Configuração de ambiente de teste
