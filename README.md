@@ -2,7 +2,7 @@
 
 ## Configuração de ambiente local
 
-1. **Variaveis de ambiente:** Baseado no .env.example crie o arquivo .env, o valor já atribuido no DATABASE_URL ja ira funcionar no ambiente de teste dentro do docker.
+1. **Variaveis de ambiente:** Baseado no .env.example crie o arquivo .env, o valor já atribuido no DATABASE_URL ira funcionar no ambiente de teste dentro do docker.
 2. **Subir ambiente de teste local:** Rode o comando `npm  run start`, a url para testes estara disponivel em **http://localhost:<VALOR COLOCADO NA CONSTANTE PORT NO .ENV>**, documentação se encontra no endpoint **/api/docs**
 
 ## Configuração de ambiente de teste
