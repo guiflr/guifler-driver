@@ -1,22 +1,70 @@
-name: CD/CD pipeline
+name: Build and Deploy APP
 
-on:
+on: 
   push:
-    branches:
-      - main
-jobs:
-  build:
-    runs-on: self-hosted
+    branches: [ main ]
+  workflow_call:
+    inputs:
+      AWS_REGION: { required: true, type: string }
+      AWS_ACCESS_KEY_ID: { required: true, type: string }
+      AWS_SECRET_ACCESS_KEY: { required: true, type: string }
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_SSH_KEY_PRIVATE: ${{ secrets.AWS_SSH_KEY_PRIVATE }} 
+  AWS_DEFAULT_REGION:  ${{ secrets.AWS_REGION }}
+  IMAGE_TAG: guifler-driver-image
 
+jobs:
+  deploy-app:
+    name: Build Image
+    runs-on: ubuntu-latest 
     steps:
-      - name: Deploy To EC2 Instance
-        uses: appleboy/ssh-action@master
+
+      - name: Check out code
+        uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script: |
-            docker stop webapp || true
-            docker rm webapp || true
-            docker build -f Dockerfile -t ${{ secrets.EC2_HOST }}:${{ secrets.EC2_USERNAME }} .
-            docker run -d --name webapp -p 80:80 {{ secrets.EC2_HOST }}:${{ secrets.EC2_USERNAME }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-guifler-driver-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: guifler-driver
+          IMAGE_TAG: guifler-driver-image        
+        run: |
+          docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      
+      - name: Deploy docker image to EC2
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: guifler-driver
+          IMAGE_TAG: guifler-driver-image
+          AWS_DEFAULT_REGION: us-east-1   
+        uses: appleboy/ssh-action@master        
+        with:
+          host: ec2-34-207-142-207.compute-1.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.AWS_SSH_KEY_PRIVATE }}
+          envs: AWS_SSH_KEY_PRIVATE,ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION,AWS_DEFAULT_REGION
+          script: |-
+            sudo apt update
+            sudo apt install docker.io -y
+            sudo apt install awscli -y
+            sudo $(aws ecr get-login --no-include-email --region us-east-1)
+            sudo docker stop guifler-driver-container || true
+            sudo docker rm guifler-driver-container || true
+            sudo docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            sudo docker run -d --name guifler-driver-container -p 80:9090 $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
